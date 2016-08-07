@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CodeFirstEFfromExistingDB/NorthwindDemo/bin/Debug
+/CodeFirstEFfromExistingDB/NorthwindDemo/obj/Debug
+/CodeFirstEFfromExistingDB/Northwind.Datalayer/bin/Debug
+/CodeFirstEFfromExistingDB/Northwind.Datalayer/obj/Debug
