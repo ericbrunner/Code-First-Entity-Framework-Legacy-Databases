@@ -1,5 +1,4 @@
-﻿Imports Northwind.Datalayer
-Imports Northwind.Datalayer.Model
+﻿Imports Northwind.Datalayer.Model
 
 Module Module1
 

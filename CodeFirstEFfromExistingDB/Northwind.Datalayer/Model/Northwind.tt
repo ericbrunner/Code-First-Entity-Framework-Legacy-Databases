@@ -8,7 +8,7 @@
     // Main settings **********************************************************************************************************************
     ConnectionStringName = "NorthwindDbContext";   // Searches for this connection string in config files listed below in the ConfigFilenameSearchOrder setting
     //ConnectionStringName is the only required setting
-    // Namespace = ""; // Override the default namespace here
+    Namespace = "RCS.DataAccessLayer"; // Override the default namespace here
     DbContextName = "NorthwindDbContext";
     //DbContextInterfaceName = "IMyDbContext"; //Defaults to "I" + DbContextName
     DbContextInterfaceBaseClasses = "System.IDisposable";    // Specify what the base classes are for your database context interface
