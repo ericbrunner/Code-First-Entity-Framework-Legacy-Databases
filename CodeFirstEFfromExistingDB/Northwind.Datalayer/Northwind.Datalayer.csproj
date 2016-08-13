@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Northwind.cs">
+    <Compile Include="Model\Northwind.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Northwind.tt</DependentUpon>
@@ -64,12 +64,12 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="EF.Reverse.POCO.Core.ttinclude" />
-    <None Include="EF.Reverse.POCO.ttinclude" />
+    <None Include="Model\EF.Reverse.POCO.Core.ttinclude" />
+    <None Include="Model\EF.Reverse.POCO.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Northwind.tt">
+    <Content Include="Model\Northwind.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Northwind.cs</LastGenOutput>
     </Content>

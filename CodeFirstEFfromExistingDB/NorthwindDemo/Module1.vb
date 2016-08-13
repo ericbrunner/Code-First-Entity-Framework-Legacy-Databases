@@ -1,4 +1,5 @@
 ﻿Imports Northwind.Datalayer
+Imports Northwind.Datalayer.Model
 
 Module Module1
 
@@ -17,7 +18,7 @@ Module Module1
             Dim customerHistories = dbContext.CustOrderHist("ALFKI")
 
             For Each customerHistory In customerHistories
-                Console.WriteLine($"{customerHistory.Total, 2} {customerHistory.ProductName}")
+                Console.WriteLine($"{customerHistory.Total,2} {customerHistory.ProductName}")
             Next
 
         End Using
