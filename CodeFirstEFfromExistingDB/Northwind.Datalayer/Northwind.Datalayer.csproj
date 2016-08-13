@@ -50,11 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\FakeNorthwindDbContext.cs" />
+    <Compile Include="Model\Interfaces\ISaveChangesCount.cs" />
     <Compile Include="Model\Northwind.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Context\CustomDbContext.cs" />
+    <Compile Include="Model\NorthwindDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

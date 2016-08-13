@@ -1,4 +1,4 @@
-﻿Imports Northwind.Datalayer.Model
+﻿Imports Northwind.DataAccessLayer
 
 Module Module1
 
@@ -19,6 +19,17 @@ Module Module1
             For Each customerHistory In customerHistories
                 Console.WriteLine($"{customerHistory.Total,2} {customerHistory.ProductName}")
             Next
+
+
+            Dim orderDetail = dbContext.OrderDetails.First()
+            Console.WriteLine(orderDetail.Product.ProductName)
+
+            Console.WriteLine()
+
+            Console.WriteLine(dbContext.GetSaveChangesCount())
+            dbContext.SaveChanges()
+            dbContext.SaveChanges()
+            Console.WriteLine(dbContext.GetSaveChangesCount())
 
         End Using
 

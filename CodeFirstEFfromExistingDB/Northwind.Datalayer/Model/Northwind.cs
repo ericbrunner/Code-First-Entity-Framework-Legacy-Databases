@@ -26,13 +26,13 @@
 // TargetFrameworkVersion = 4.51
 #pragma warning disable 1591    //  Ignore "Missing XML Comment" warning
 
-namespace RCS.DataAccessLayer
+namespace Northwind.DataAccessLayer
 {
     using System.Linq;
 
     #region Unit of work
 
-    public interface INorthwindDbContext : System.IDisposable
+    public interface INorthwindDbContext : System.IDisposable, Northwind.DataAccessLayer.Model.Interfaces.ISaveChangesCount
     {
         System.Data.Entity.DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; } // Alphabetical list of products
         System.Data.Entity.DbSet<Category> Categories { get; set; } // Categories
@@ -102,7 +102,7 @@ namespace RCS.DataAccessLayer
     #region Database context
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class NorthwindDbContext : System.Data.Entity.DbContext, INorthwindDbContext
+    public partial class NorthwindDbContext : Northwind.DataAccessLayer.Model.Context.CustomDbContext, INorthwindDbContext
     {
         public System.Data.Entity.DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; } // Alphabetical list of products
         public System.Data.Entity.DbSet<Category> Categories { get; set; } // Categories
@@ -140,26 +140,31 @@ namespace RCS.DataAccessLayer
         public NorthwindDbContext()
             : base("Name=NorthwindDbContext")
         {
+            InitializePartial();
         }
 
         public NorthwindDbContext(string connectionString)
             : base(connectionString)
         {
+            InitializePartial();
         }
 
         public NorthwindDbContext(string connectionString, System.Data.Entity.Infrastructure.DbCompiledModel model)
             : base(connectionString, model)
         {
+            InitializePartial();
         }
 
         public NorthwindDbContext(System.Data.Common.DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
+            InitializePartial();
         }
 
         public NorthwindDbContext(System.Data.Common.DbConnection existingConnection, System.Data.Entity.Infrastructure.DbCompiledModel model, bool contextOwnsConnection)
             : base(existingConnection, model, contextOwnsConnection)
         {
+            InitializePartial();
         }
 
         protected override void Dispose(bool disposing)
@@ -207,6 +212,8 @@ namespace RCS.DataAccessLayer
             modelBuilder.Configurations.Add(new SupplierConfiguration());
             modelBuilder.Configurations.Add(new SysdiagramConfiguration());
             modelBuilder.Configurations.Add(new TerritoryConfiguration());
+
+            OnModelCreatingPartial(modelBuilder);
         }
 
         public static System.Data.Entity.DbModelBuilder CreateModel(System.Data.Entity.DbModelBuilder modelBuilder, string schema)
@@ -240,6 +247,9 @@ namespace RCS.DataAccessLayer
             modelBuilder.Configurations.Add(new TerritoryConfiguration(schema));
             return modelBuilder;
         }
+
+        partial void InitializePartial();
+        partial void OnModelCreatingPartial(System.Data.Entity.DbModelBuilder modelBuilder);
         
         // Stored Procedures
         public System.Collections.Generic.List<CustOrderHistReturnModel> CustOrderHist(string customerId)
@@ -474,7 +484,7 @@ namespace RCS.DataAccessLayer
     #region Fake Database context
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class FakeNorthwindDbContext : INorthwindDbContext
+    public partial class FakeNorthwindDbContext : INorthwindDbContext
     {
         public System.Data.Entity.DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; }
         public System.Data.Entity.DbSet<Category> Categories { get; set; }
@@ -533,6 +543,8 @@ namespace RCS.DataAccessLayer
             Suppliers = new FakeDbSet<Supplier>("SupplierId");
             Sysdiagrams = new FakeDbSet<Sysdiagram>("DiagramId");
             Territories = new FakeDbSet<Territory>("TerritoryId");
+
+            InitializePartial();
         }
 
         public int SaveChangesCount { get; private set; }
@@ -553,6 +565,8 @@ namespace RCS.DataAccessLayer
             ++SaveChangesCount;
             return System.Threading.Tasks.Task<int>.Factory.StartNew(() => 1, cancellationToken);
         }
+
+        partial void InitializePartial();
 
         protected virtual void Dispose(bool disposing)
         {
@@ -717,7 +731,7 @@ namespace RCS.DataAccessLayer
     //      }
     //      Read more about it here: https://msdn.microsoft.com/en-us/data/dn314431.aspx
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class FakeDbSet<TEntity> : System.Data.Entity.DbSet<TEntity>, IQueryable, System.Collections.Generic.IEnumerable<TEntity>, System.Data.Entity.Infrastructure.IDbAsyncEnumerable<TEntity> where TEntity : class
+    public partial class FakeDbSet<TEntity> : System.Data.Entity.DbSet<TEntity>, IQueryable, System.Collections.Generic.IEnumerable<TEntity>, System.Data.Entity.Infrastructure.IDbAsyncEnumerable<TEntity> where TEntity : class
     {
         private readonly System.Reflection.PropertyInfo[] _primaryKeys;
         private readonly System.Collections.ObjectModel.ObservableCollection<TEntity> _data;
@@ -727,6 +741,8 @@ namespace RCS.DataAccessLayer
         {
             _data = new System.Collections.ObjectModel.ObservableCollection<TEntity>();
             _query = _data.AsQueryable();
+
+            InitializePartial();
         }
 
         public FakeDbSet(params string[] primaryKeys)
@@ -734,6 +750,8 @@ namespace RCS.DataAccessLayer
             _primaryKeys = typeof(TEntity).GetProperties().Where(x => primaryKeys.Contains(x.Name)).ToArray();
             _data = new System.Collections.ObjectModel.ObservableCollection<TEntity>();
             _query = _data.AsQueryable();
+
+            InitializePartial();
         }
 
         public override TEntity Find(params object[] keyValues)
@@ -839,6 +857,8 @@ namespace RCS.DataAccessLayer
         {
             return new FakeDbAsyncEnumerator<TEntity>(_data.GetEnumerator());
         }
+
+        partial void InitializePartial();
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
@@ -946,7 +966,7 @@ namespace RCS.DataAccessLayer
 
     // Alphabetical list of products
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class AlphabeticalListOfProduct
+    public partial class AlphabeticalListOfProduct
     {
         public int ProductId { get; set; } // ProductID
         public string ProductName { get; set; } // ProductName (length: 40)
@@ -959,11 +979,18 @@ namespace RCS.DataAccessLayer
         public short? ReorderLevel { get; set; } // ReorderLevel
         public bool Discontinued { get; set; } // Discontinued
         public string CategoryName { get; set; } // CategoryName (length: 15)
+
+        public AlphabeticalListOfProduct()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Categories
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Category
+    public partial class Category
     {
         public int CategoryId { get; set; } // CategoryID (Primary key)
         public string CategoryName { get; set; } // CategoryName (length: 15)
@@ -976,28 +1003,45 @@ namespace RCS.DataAccessLayer
         public Category()
         {
             Products = new System.Collections.Generic.List<Product>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Category Sales for 1997
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CategorySalesFor1997
+    public partial class CategorySalesFor1997
     {
         public string CategoryName { get; set; } // CategoryName (length: 15)
         public decimal? CategorySales { get; set; } // CategorySales
+
+        public CategorySalesFor1997()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Current Product List
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CurrentProductList
+    public partial class CurrentProductList
     {
         public int ProductId { get; set; } // ProductID
         public string ProductName { get; set; } // ProductName (length: 40)
+
+        public CurrentProductList()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Customers
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Customer
+    public partial class Customer
     {
         public string CustomerId { get; set; } // CustomerID (Primary key) (length: 5)
         public string CompanyName { get; set; } // CompanyName (length: 40)
@@ -1019,22 +1063,32 @@ namespace RCS.DataAccessLayer
         {
             Orders = new System.Collections.Generic.List<Order>();
             CustomerDemographics = new System.Collections.Generic.List<CustomerDemographic>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Customer and Suppliers by City
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustomerAndSuppliersByCity
+    public partial class CustomerAndSuppliersByCity
     {
         public string City { get; set; } // City (length: 15)
         public string CompanyName { get; set; } // CompanyName (length: 40)
         public string ContactName { get; set; } // ContactName (length: 30)
         public string Relationship { get; set; } // Relationship (length: 9)
+
+        public CustomerAndSuppliersByCity()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // CustomerDemographics
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustomerDemographic
+    public partial class CustomerDemographic
     {
         public string CustomerTypeId { get; set; } // CustomerTypeID (Primary key) (length: 10)
         public string CustomerDesc { get; set; } // CustomerDesc (length: 1073741823)
@@ -1045,12 +1099,15 @@ namespace RCS.DataAccessLayer
         public CustomerDemographic()
         {
             Customers = new System.Collections.Generic.List<Customer>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Employees
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Employee
+    public partial class Employee
     {
         public int EmployeeId { get; set; } // EmployeeID (Primary key)
         public string LastName { get; set; } // LastName (length: 20)
@@ -1084,12 +1141,15 @@ namespace RCS.DataAccessLayer
             Employees = new System.Collections.Generic.List<Employee>();
             Orders = new System.Collections.Generic.List<Order>();
             Territories = new System.Collections.Generic.List<Territory>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Invoices
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Invoice
+    public partial class Invoice
     {
         public string ShipName { get; set; } // ShipName (length: 40)
         public string ShipAddress { get; set; } // ShipAddress (length: 60)
@@ -1117,11 +1177,18 @@ namespace RCS.DataAccessLayer
         public float Discount { get; set; } // Discount
         public decimal? ExtendedPrice { get; set; } // ExtendedPrice
         public decimal? Freight { get; set; } // Freight
+
+        public Invoice()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Orders
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Order
+    public partial class Order
     {
         public int OrderId { get; set; } // OrderID (Primary key)
         public string CustomerId { get; set; } // CustomerID (length: 5)
@@ -1150,12 +1217,15 @@ namespace RCS.DataAccessLayer
         {
             Freight = 0m;
             OrderDetails = new System.Collections.Generic.List<OrderDetail>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Order Details
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderDetail
+    public partial class OrderDetail
     {
         public int OrderId { get; set; } // OrderID (Primary key)
         public int ProductId { get; set; } // ProductID (Primary key)
@@ -1172,12 +1242,15 @@ namespace RCS.DataAccessLayer
             UnitPrice = 0m;
             Quantity = 1;
             Discount = 0;
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Order Details Extended
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderDetailsExtended
+    public partial class OrderDetailsExtended
     {
         public int OrderId { get; set; } // OrderID
         public int ProductId { get; set; } // ProductID
@@ -1186,11 +1259,18 @@ namespace RCS.DataAccessLayer
         public short Quantity { get; set; } // Quantity
         public float Discount { get; set; } // Discount
         public decimal? ExtendedPrice { get; set; } // ExtendedPrice
+
+        public OrderDetailsExtended()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Orders Qry
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrdersQry
+    public partial class OrdersQry
     {
         public int OrderId { get; set; } // OrderID
         public string CustomerId { get; set; } // CustomerID (length: 5)
@@ -1212,19 +1292,33 @@ namespace RCS.DataAccessLayer
         public string Region { get; set; } // Region (length: 15)
         public string PostalCode { get; set; } // PostalCode (length: 10)
         public string Country { get; set; } // Country (length: 15)
+
+        public OrdersQry()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Order Subtotals
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderSubtotal
+    public partial class OrderSubtotal
     {
         public int OrderId { get; set; } // OrderID
         public decimal? Subtotal { get; set; } // Subtotal
+
+        public OrderSubtotal()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Products
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Product
+    public partial class Product
     {
         public int ProductId { get; set; } // ProductID (Primary key)
         public string ProductName { get; set; } // ProductName (length: 40)
@@ -1252,52 +1346,83 @@ namespace RCS.DataAccessLayer
             ReorderLevel = 0;
             Discontinued = false;
             OrderDetails = new System.Collections.Generic.List<OrderDetail>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Products Above Average Price
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductsAboveAveragePrice
+    public partial class ProductsAboveAveragePrice
     {
         public string ProductName { get; set; } // ProductName (length: 40)
         public decimal? UnitPrice { get; set; } // UnitPrice
+
+        public ProductsAboveAveragePrice()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Product Sales for 1997
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductSalesFor1997
+    public partial class ProductSalesFor1997
     {
         public string CategoryName { get; set; } // CategoryName (length: 15)
         public string ProductName { get; set; } // ProductName (length: 40)
         public decimal? ProductSales { get; set; } // ProductSales
+
+        public ProductSalesFor1997()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Products by Category
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductsByCategory
+    public partial class ProductsByCategory
     {
         public string CategoryName { get; set; } // CategoryName (length: 15)
         public string ProductName { get; set; } // ProductName (length: 40)
         public string QuantityPerUnit { get; set; } // QuantityPerUnit (length: 20)
         public short? UnitsInStock { get; set; } // UnitsInStock
         public bool Discontinued { get; set; } // Discontinued
+
+        public ProductsByCategory()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // The table 'Quarterly Orders' is not usable by entity framework because it
     // does not have a primary key. It is listed here for completeness.
     // Quarterly Orders
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class QuarterlyOrder
+    public partial class QuarterlyOrder
     {
         public string CustomerId { get; set; } // CustomerID (length: 5)
         public string CompanyName { get; set; } // CompanyName (length: 40)
         public string City { get; set; } // City (length: 15)
         public string Country { get; set; } // Country (length: 15)
+
+        public QuarterlyOrder()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Region
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Region
+    public partial class Region
     {
         public int RegionId { get; set; } // RegionID (Primary key)
         public string RegionDescription { get; set; } // RegionDescription (length: 50)
@@ -1308,32 +1433,49 @@ namespace RCS.DataAccessLayer
         public Region()
         {
             Territories = new System.Collections.Generic.List<Territory>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Sales by Category
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SalesByCategory
+    public partial class SalesByCategory
     {
         public int CategoryId { get; set; } // CategoryID
         public string CategoryName { get; set; } // CategoryName (length: 15)
         public string ProductName { get; set; } // ProductName (length: 40)
         public decimal? ProductSales { get; set; } // ProductSales
+
+        public SalesByCategory()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Sales Totals by Amount
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SalesTotalsByAmount
+    public partial class SalesTotalsByAmount
     {
         public decimal? SaleAmount { get; set; } // SaleAmount
         public int OrderId { get; set; } // OrderID
         public string CompanyName { get; set; } // CompanyName (length: 40)
         public System.DateTime? ShippedDate { get; set; } // ShippedDate
+
+        public SalesTotalsByAmount()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Shippers
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Shipper
+    public partial class Shipper
     {
         public int ShipperId { get; set; } // ShipperID (Primary key)
         public string CompanyName { get; set; } // CompanyName (length: 40)
@@ -1345,30 +1487,47 @@ namespace RCS.DataAccessLayer
         public Shipper()
         {
             Orders = new System.Collections.Generic.List<Order>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // Summary of Sales by Quarter
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SummaryOfSalesByQuarter
+    public partial class SummaryOfSalesByQuarter
     {
         public System.DateTime? ShippedDate { get; set; } // ShippedDate
         public int OrderId { get; set; } // OrderID
         public decimal? Subtotal { get; set; } // Subtotal
+
+        public SummaryOfSalesByQuarter()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Summary of Sales by Year
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SummaryOfSalesByYear
+    public partial class SummaryOfSalesByYear
     {
         public System.DateTime? ShippedDate { get; set; } // ShippedDate
         public int OrderId { get; set; } // OrderID
         public decimal? Subtotal { get; set; } // Subtotal
+
+        public SummaryOfSalesByYear()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Suppliers
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Supplier
+    public partial class Supplier
     {
         public int SupplierId { get; set; } // SupplierID (Primary key)
         public string CompanyName { get; set; } // CompanyName (length: 40)
@@ -1389,23 +1548,33 @@ namespace RCS.DataAccessLayer
         public Supplier()
         {
             Products = new System.Collections.Generic.List<Product>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     // sysdiagrams
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Sysdiagram
+    public partial class Sysdiagram
     {
         public string Name { get; set; } // name (length: 128)
         public int PrincipalId { get; set; } // principal_id
         public int DiagramId { get; set; } // diagram_id (Primary key)
         public int? Version { get; set; } // version
         public byte[] Definition { get; set; } // definition
+
+        public Sysdiagram()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
     }
 
     // Territories
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class Territory
+    public partial class Territory
     {
         public string TerritoryId { get; set; } // TerritoryID (Primary key) (length: 20)
         public string TerritoryDescription { get; set; } // TerritoryDescription (length: 50)
@@ -1420,7 +1589,10 @@ namespace RCS.DataAccessLayer
         public Territory()
         {
             Employees = new System.Collections.Generic.List<Employee>();
+            InitializePartial();
         }
+
+        partial void InitializePartial();
     }
 
     #endregion
@@ -1429,7 +1601,7 @@ namespace RCS.DataAccessLayer
 
     // Alphabetical list of products
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class AlphabeticalListOfProductConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<AlphabeticalListOfProduct>
+    public partial class AlphabeticalListOfProductConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<AlphabeticalListOfProduct>
     {
         public AlphabeticalListOfProductConfiguration()
             : this("dbo")
@@ -1452,12 +1624,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.ReorderLevel).HasColumnName(@"ReorderLevel").IsOptional().HasColumnType("smallint");
             Property(x => x.Discontinued).HasColumnName(@"Discontinued").IsRequired().HasColumnType("bit");
             Property(x => x.CategoryName).HasColumnName(@"CategoryName").IsRequired().HasColumnType("nvarchar").HasMaxLength(15);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Categories
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Category>
+    public partial class CategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Category>
     {
         public CategoryConfiguration()
             : this("dbo")
@@ -1473,12 +1647,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.CategoryName).HasColumnName(@"CategoryName").IsRequired().HasColumnType("nvarchar").HasMaxLength(15);
             Property(x => x.Description).HasColumnName(@"Description").IsOptional().HasColumnType("ntext").IsMaxLength();
             Property(x => x.Picture).HasColumnName(@"Picture").IsOptional().HasColumnType("image").HasMaxLength(2147483647);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Category Sales for 1997
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CategorySalesFor1997Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CategorySalesFor1997>
+    public partial class CategorySalesFor1997Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CategorySalesFor1997>
     {
         public CategorySalesFor1997Configuration()
             : this("dbo")
@@ -1492,12 +1668,14 @@ namespace RCS.DataAccessLayer
 
             Property(x => x.CategoryName).HasColumnName(@"CategoryName").IsRequired().HasColumnType("nvarchar").HasMaxLength(15);
             Property(x => x.CategorySales).HasColumnName(@"CategorySales").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Current Product List
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CurrentProductListConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CurrentProductList>
+    public partial class CurrentProductListConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CurrentProductList>
     {
         public CurrentProductListConfiguration()
             : this("dbo")
@@ -1511,12 +1689,14 @@ namespace RCS.DataAccessLayer
 
             Property(x => x.ProductId).HasColumnName(@"ProductID").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.ProductName).HasColumnName(@"ProductName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Customers
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustomerConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Customer>
+    public partial class CustomerConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Customer>
     {
         public CustomerConfiguration()
             : this("dbo")
@@ -1545,12 +1725,14 @@ namespace RCS.DataAccessLayer
                 m.MapLeftKey("CustomerID");
                 m.MapRightKey("CustomerTypeID");
             });
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Customer and Suppliers by City
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustomerAndSuppliersByCityConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CustomerAndSuppliersByCity>
+    public partial class CustomerAndSuppliersByCityConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CustomerAndSuppliersByCity>
     {
         public CustomerAndSuppliersByCityConfiguration()
             : this("dbo")
@@ -1566,12 +1748,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.CompanyName).HasColumnName(@"CompanyName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
             Property(x => x.ContactName).HasColumnName(@"ContactName").IsOptional().HasColumnType("nvarchar").HasMaxLength(30);
             Property(x => x.Relationship).HasColumnName(@"Relationship").IsRequired().IsUnicode(false).HasColumnType("varchar").HasMaxLength(9);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // CustomerDemographics
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustomerDemographicConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CustomerDemographic>
+    public partial class CustomerDemographicConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<CustomerDemographic>
     {
         public CustomerDemographicConfiguration()
             : this("dbo")
@@ -1585,12 +1769,14 @@ namespace RCS.DataAccessLayer
 
             Property(x => x.CustomerTypeId).HasColumnName(@"CustomerTypeID").IsRequired().IsFixedLength().HasColumnType("nchar").HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.CustomerDesc).HasColumnName(@"CustomerDesc").IsOptional().HasColumnType("ntext").IsMaxLength();
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Employees
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class EmployeeConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Employee>
+    public partial class EmployeeConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Employee>
     {
         public EmployeeConfiguration()
             : this("dbo")
@@ -1629,12 +1815,14 @@ namespace RCS.DataAccessLayer
                 m.MapLeftKey("EmployeeID");
                 m.MapRightKey("TerritoryID");
             });
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Invoices
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class InvoiceConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Invoice>
+    public partial class InvoiceConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Invoice>
     {
         public InvoiceConfiguration()
             : this("dbo")
@@ -1672,12 +1860,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.Discount).HasColumnName(@"Discount").IsRequired().HasColumnType("real");
             Property(x => x.ExtendedPrice).HasColumnName(@"ExtendedPrice").IsOptional().HasColumnType("money").HasPrecision(19,4);
             Property(x => x.Freight).HasColumnName(@"Freight").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Orders
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Order>
+    public partial class OrderConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Order>
     {
         public OrderConfiguration()
             : this("dbo")
@@ -1708,12 +1898,14 @@ namespace RCS.DataAccessLayer
             HasOptional(a => a.Customer).WithMany(b => b.Orders).HasForeignKey(c => c.CustomerId).WillCascadeOnDelete(false); // FK_Orders_Customers
             HasOptional(a => a.Employee).WithMany(b => b.Orders).HasForeignKey(c => c.EmployeeId).WillCascadeOnDelete(false); // FK_Orders_Employees
             HasOptional(a => a.Shipper).WithMany(b => b.Orders).HasForeignKey(c => c.ShipVia).WillCascadeOnDelete(false); // FK_Orders_Shippers
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Order Details
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderDetailConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderDetail>
+    public partial class OrderDetailConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderDetail>
     {
         public OrderDetailConfiguration()
             : this("dbo")
@@ -1734,12 +1926,14 @@ namespace RCS.DataAccessLayer
             // Foreign keys
             HasRequired(a => a.Order).WithMany(b => b.OrderDetails).HasForeignKey(c => c.OrderId).WillCascadeOnDelete(false); // FK_Order_Details_Orders
             HasRequired(a => a.Product).WithMany(b => b.OrderDetails).HasForeignKey(c => c.ProductId).WillCascadeOnDelete(false); // FK_Order_Details_Products
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Order Details Extended
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderDetailsExtendedConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderDetailsExtended>
+    public partial class OrderDetailsExtendedConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderDetailsExtended>
     {
         public OrderDetailsExtendedConfiguration()
             : this("dbo")
@@ -1758,12 +1952,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.Quantity).HasColumnName(@"Quantity").IsRequired().HasColumnType("smallint");
             Property(x => x.Discount).HasColumnName(@"Discount").IsRequired().HasColumnType("real");
             Property(x => x.ExtendedPrice).HasColumnName(@"ExtendedPrice").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Orders Qry
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrdersQryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrdersQry>
+    public partial class OrdersQryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrdersQry>
     {
         public OrdersQryConfiguration()
             : this("dbo")
@@ -1795,12 +1991,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.Region).HasColumnName(@"Region").IsOptional().HasColumnType("nvarchar").HasMaxLength(15);
             Property(x => x.PostalCode).HasColumnName(@"PostalCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
             Property(x => x.Country).HasColumnName(@"Country").IsOptional().HasColumnType("nvarchar").HasMaxLength(15);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Order Subtotals
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class OrderSubtotalConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderSubtotal>
+    public partial class OrderSubtotalConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<OrderSubtotal>
     {
         public OrderSubtotalConfiguration()
             : this("dbo")
@@ -1814,12 +2012,14 @@ namespace RCS.DataAccessLayer
 
             Property(x => x.OrderId).HasColumnName(@"OrderID").IsRequired().HasColumnType("int");
             Property(x => x.Subtotal).HasColumnName(@"Subtotal").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Products
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Product>
+    public partial class ProductConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Product>
     {
         public ProductConfiguration()
             : this("dbo")
@@ -1845,12 +2045,14 @@ namespace RCS.DataAccessLayer
             // Foreign keys
             HasOptional(a => a.Category).WithMany(b => b.Products).HasForeignKey(c => c.CategoryId).WillCascadeOnDelete(false); // FK_Products_Categories
             HasOptional(a => a.Supplier).WithMany(b => b.Products).HasForeignKey(c => c.SupplierId).WillCascadeOnDelete(false); // FK_Products_Suppliers
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Products Above Average Price
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductsAboveAveragePriceConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductsAboveAveragePrice>
+    public partial class ProductsAboveAveragePriceConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductsAboveAveragePrice>
     {
         public ProductsAboveAveragePriceConfiguration()
             : this("dbo")
@@ -1864,12 +2066,14 @@ namespace RCS.DataAccessLayer
 
             Property(x => x.ProductName).HasColumnName(@"ProductName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
             Property(x => x.UnitPrice).HasColumnName(@"UnitPrice").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Product Sales for 1997
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductSalesFor1997Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductSalesFor1997>
+    public partial class ProductSalesFor1997Configuration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductSalesFor1997>
     {
         public ProductSalesFor1997Configuration()
             : this("dbo")
@@ -1884,12 +2088,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.CategoryName).HasColumnName(@"CategoryName").IsRequired().HasColumnType("nvarchar").HasMaxLength(15);
             Property(x => x.ProductName).HasColumnName(@"ProductName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
             Property(x => x.ProductSales).HasColumnName(@"ProductSales").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Products by Category
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ProductsByCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductsByCategory>
+    public partial class ProductsByCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<ProductsByCategory>
     {
         public ProductsByCategoryConfiguration()
             : this("dbo")
@@ -1906,12 +2112,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.QuantityPerUnit).HasColumnName(@"QuantityPerUnit").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
             Property(x => x.UnitsInStock).HasColumnName(@"UnitsInStock").IsOptional().HasColumnType("smallint");
             Property(x => x.Discontinued).HasColumnName(@"Discontinued").IsRequired().HasColumnType("bit");
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Region
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class RegionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Region>
+    public partial class RegionConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Region>
     {
         public RegionConfiguration()
             : this("dbo")
@@ -1925,12 +2133,14 @@ namespace RCS.DataAccessLayer
 
             Property(x => x.RegionId).HasColumnName(@"RegionID").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.RegionDescription).HasColumnName(@"RegionDescription").IsRequired().IsFixedLength().HasColumnType("nchar").HasMaxLength(50);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Sales by Category
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SalesByCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SalesByCategory>
+    public partial class SalesByCategoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SalesByCategory>
     {
         public SalesByCategoryConfiguration()
             : this("dbo")
@@ -1946,12 +2156,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.CategoryName).HasColumnName(@"CategoryName").IsRequired().HasColumnType("nvarchar").HasMaxLength(15);
             Property(x => x.ProductName).HasColumnName(@"ProductName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
             Property(x => x.ProductSales).HasColumnName(@"ProductSales").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Sales Totals by Amount
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SalesTotalsByAmountConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SalesTotalsByAmount>
+    public partial class SalesTotalsByAmountConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SalesTotalsByAmount>
     {
         public SalesTotalsByAmountConfiguration()
             : this("dbo")
@@ -1967,12 +2179,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.OrderId).HasColumnName(@"OrderID").IsRequired().HasColumnType("int");
             Property(x => x.CompanyName).HasColumnName(@"CompanyName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
             Property(x => x.ShippedDate).HasColumnName(@"ShippedDate").IsOptional().HasColumnType("datetime");
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Shippers
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class ShipperConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Shipper>
+    public partial class ShipperConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Shipper>
     {
         public ShipperConfiguration()
             : this("dbo")
@@ -1987,12 +2201,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.ShipperId).HasColumnName(@"ShipperID").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.CompanyName).HasColumnName(@"CompanyName").IsRequired().HasColumnType("nvarchar").HasMaxLength(40);
             Property(x => x.Phone).HasColumnName(@"Phone").IsOptional().HasColumnType("nvarchar").HasMaxLength(24);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Summary of Sales by Quarter
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SummaryOfSalesByQuarterConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SummaryOfSalesByQuarter>
+    public partial class SummaryOfSalesByQuarterConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SummaryOfSalesByQuarter>
     {
         public SummaryOfSalesByQuarterConfiguration()
             : this("dbo")
@@ -2007,12 +2223,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.ShippedDate).HasColumnName(@"ShippedDate").IsOptional().HasColumnType("datetime");
             Property(x => x.OrderId).HasColumnName(@"OrderID").IsRequired().HasColumnType("int");
             Property(x => x.Subtotal).HasColumnName(@"Subtotal").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Summary of Sales by Year
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SummaryOfSalesByYearConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SummaryOfSalesByYear>
+    public partial class SummaryOfSalesByYearConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<SummaryOfSalesByYear>
     {
         public SummaryOfSalesByYearConfiguration()
             : this("dbo")
@@ -2027,12 +2245,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.ShippedDate).HasColumnName(@"ShippedDate").IsOptional().HasColumnType("datetime");
             Property(x => x.OrderId).HasColumnName(@"OrderID").IsRequired().HasColumnType("int");
             Property(x => x.Subtotal).HasColumnName(@"Subtotal").IsOptional().HasColumnType("money").HasPrecision(19,4);
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Suppliers
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SupplierConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Supplier>
+    public partial class SupplierConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Supplier>
     {
         public SupplierConfiguration()
             : this("dbo")
@@ -2056,12 +2276,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.Phone).HasColumnName(@"Phone").IsOptional().HasColumnType("nvarchar").HasMaxLength(24);
             Property(x => x.Fax).HasColumnName(@"Fax").IsOptional().HasColumnType("nvarchar").HasMaxLength(24);
             Property(x => x.HomePage).HasColumnName(@"HomePage").IsOptional().HasColumnType("ntext").IsMaxLength();
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // sysdiagrams
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SysdiagramConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Sysdiagram>
+    public partial class SysdiagramConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Sysdiagram>
     {
         public SysdiagramConfiguration()
             : this("dbo")
@@ -2078,12 +2300,14 @@ namespace RCS.DataAccessLayer
             Property(x => x.DiagramId).HasColumnName(@"diagram_id").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
             Property(x => x.Version).HasColumnName(@"version").IsOptional().HasColumnType("int");
             Property(x => x.Definition).HasColumnName(@"definition").IsOptional().HasColumnType("varbinary");
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     // Territories
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class TerritoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Territory>
+    public partial class TerritoryConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Territory>
     {
         public TerritoryConfiguration()
             : this("dbo")
@@ -2101,7 +2325,9 @@ namespace RCS.DataAccessLayer
 
             // Foreign keys
             HasRequired(a => a.Region).WithMany(b => b.Territories).HasForeignKey(c => c.RegionId).WillCascadeOnDelete(false); // FK_Territories_Region
+            InitializePartial();
         }
+        partial void InitializePartial();
     }
 
     #endregion
@@ -2109,14 +2335,14 @@ namespace RCS.DataAccessLayer
     #region Stored procedure return models
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustOrderHistReturnModel
+    public partial class CustOrderHistReturnModel
     {
         public System.String ProductName { get; set; }
         public System.Int32? Total { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustOrdersDetailReturnModel
+    public partial class CustOrdersDetailReturnModel
     {
         public System.String ProductName { get; set; }
         public System.Decimal? UnitPrice { get; set; }
@@ -2126,7 +2352,7 @@ namespace RCS.DataAccessLayer
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class CustOrdersOrdersReturnModel
+    public partial class CustOrdersOrdersReturnModel
     {
         public System.Int32 OrderID { get; set; }
         public System.DateTime? OrderDate { get; set; }
@@ -2135,7 +2361,7 @@ namespace RCS.DataAccessLayer
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class EmployeeSalesByCountryReturnModel
+    public partial class EmployeeSalesByCountryReturnModel
     {
         public System.String Country { get; set; }
         public System.String LastName { get; set; }
@@ -2146,7 +2372,7 @@ namespace RCS.DataAccessLayer
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SalesByYearReturnModel
+    public partial class SalesByYearReturnModel
     {
         public System.DateTime? ShippedDate { get; set; }
         public System.Int32 OrderID { get; set; }
@@ -2155,14 +2381,14 @@ namespace RCS.DataAccessLayer
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class SalesByCategoryReturnModel
+    public partial class SalesByCategoryReturnModel
     {
         public System.String ProductName { get; set; }
         public System.Decimal? TotalPurchase { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public class TenMostExpensiveProductsReturnModel
+    public partial class TenMostExpensiveProductsReturnModel
     {
         public System.String TenMostExpensiveProducts { get; set; }
         public System.Decimal? UnitPrice { get; set; }
