@@ -12,8 +12,10 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
-    public interface INorthwindDbContext : System.IDisposable, Northwind.DataAccessLayer.Model.Interfaces.ISaveChangesCount
+    public interface INorthwindDbContext : System.IDisposable, ISaveChangesCount
     {
         System.Data.Entity.DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; } // Alphabetical list of products
         System.Data.Entity.DbSet<Category> Categories { get; set; } // Categories

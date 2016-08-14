@@ -12,11 +12,13 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
     using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
-    public partial class NorthwindDbContext : Northwind.DataAccessLayer.Model.Context.CustomDbContext, INorthwindDbContext
+    public partial class NorthwindDbContext : CustomDbContext, INorthwindDbContext
     {
         public System.Data.Entity.DbSet<AlphabeticalListOfProduct> AlphabeticalListOfProducts { get; set; } // Alphabetical list of products
         public System.Data.Entity.DbSet<Category> Categories { get; set; } // Categories

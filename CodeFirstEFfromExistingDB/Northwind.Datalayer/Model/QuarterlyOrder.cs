@@ -12,6 +12,8 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
     // The table 'Quarterly Orders' is not usable by entity framework because it
     // does not have a primary key. It is listed here for completeness.

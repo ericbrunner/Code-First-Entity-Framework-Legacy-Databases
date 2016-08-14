@@ -12,6 +12,8 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
     using System.Linq;
 

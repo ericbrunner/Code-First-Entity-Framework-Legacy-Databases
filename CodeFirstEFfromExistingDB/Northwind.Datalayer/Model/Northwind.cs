@@ -7,7 +7,7 @@
 // Do not make changes directly to this file - edit the template instead.
 //
 // The following connection settings were used to generate this file:
-//     Configuration file:     "NorthwindDemo\App.config"
+//     Configuration file:     "Northwind.Datalayer\App.config"
 //     Connection String Name: "Northwind"
 //     Connection String:      "Data Source=(local);Initial Catalog=Northwind;Integrated Security=True;Application Name=NorthwindDemo"
 // ------------------------------------------------------------------------------------------------
@@ -28,6 +28,8 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
 }
 // </auto-generated>

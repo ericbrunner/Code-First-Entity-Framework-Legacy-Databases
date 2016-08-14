@@ -12,6 +12,8 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
     // Order Details
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
@@ -22,7 +24,6 @@ namespace Northwind.DataAccessLayer
         public decimal UnitPrice { get; set; } // UnitPrice
         public short Quantity { get; set; } // Quantity
         public float Discount { get; set; } // Discount
-        public string NewField { get; set; } // NewField (length: 10)
 
         // Foreign keys
         public virtual Order Order { get; set; } // FK_Order_Details_Orders

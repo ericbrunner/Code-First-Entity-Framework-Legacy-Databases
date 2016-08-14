@@ -12,6 +12,8 @@
 
 namespace Northwind.DataAccessLayer
 {
+    using Northwind.DataAccessLayer.Model.Context;
+    using Northwind.DataAccessLayer.Model.Interfaces;
 
     // Order Details
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
@@ -32,7 +34,6 @@ namespace Northwind.DataAccessLayer
             Property(x => x.UnitPrice).HasColumnName(@"UnitPrice").IsRequired().HasColumnType("money").HasPrecision(19,4);
             Property(x => x.Quantity).HasColumnName(@"Quantity").IsRequired().HasColumnType("smallint");
             Property(x => x.Discount).HasColumnName(@"Discount").IsRequired().HasColumnType("real");
-            Property(x => x.NewField).HasColumnName(@"NewField").IsOptional().IsFixedLength().HasColumnType("nchar").HasMaxLength(10);
 
             // Foreign keys
             HasRequired(a => a.Order).WithMany(b => b.OrderDetails).HasForeignKey(c => c.OrderId).WillCascadeOnDelete(false); // FK_Order_Details_Orders
