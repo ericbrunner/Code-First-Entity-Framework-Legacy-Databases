@@ -31,6 +31,28 @@ Module Module1
             dbContext.SaveChanges()
             Console.WriteLine(dbContext.GetSaveChangesCount())
 
+            Dim newTables = dbContext.Database.SqlQuery(Of NewTable)("select * from NewTable")
+
+            For Each newTable In newTables
+                Console.WriteLine($"id: {newTable.Id}   name: {newTable.Name}   desc: {newTable.Desc}   datetime: {newTable.NewField}")
+            Next
+
+            ' Update Table: NewTable
+            Dim efNewTables = dbContext.NewTables
+
+            For Each efNewTable In efNewTables
+                efNewTable.NewField = DateTime.Now
+            Next
+
+            ' save changes
+            dbContext.SaveChanges()
+
+            newTables = dbContext.Database.SqlQuery(Of NewTable)("select * from NewTable")
+
+            For Each newTable In newTables
+                Console.WriteLine($"id: {newTable.Id}   name: {newTable.Name}   desc: {newTable.Desc}   datetime: {newTable.NewField}")
+            Next
+
         End Using
 
         Console.WriteLine("Press any key to exit....")

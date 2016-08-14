@@ -43,6 +43,7 @@ namespace Northwind.DataAccessLayer
         System.Data.Entity.DbSet<CustomerDemographic> CustomerDemographics { get; set; } // CustomerDemographics
         System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employees
         System.Data.Entity.DbSet<Invoice> Invoices { get; set; } // Invoices
+        System.Data.Entity.DbSet<NewTable> NewTables { get; set; } // NewTable
         System.Data.Entity.DbSet<Order> Orders { get; set; } // Orders
         System.Data.Entity.DbSet<OrderDetail> OrderDetails { get; set; } // Order Details
         System.Data.Entity.DbSet<OrderDetailsExtended> OrderDetailsExtendeds { get; set; } // Order Details Extended
@@ -113,6 +114,7 @@ namespace Northwind.DataAccessLayer
         public System.Data.Entity.DbSet<CustomerDemographic> CustomerDemographics { get; set; } // CustomerDemographics
         public System.Data.Entity.DbSet<Employee> Employees { get; set; } // Employees
         public System.Data.Entity.DbSet<Invoice> Invoices { get; set; } // Invoices
+        public System.Data.Entity.DbSet<NewTable> NewTables { get; set; } // NewTable
         public System.Data.Entity.DbSet<Order> Orders { get; set; } // Orders
         public System.Data.Entity.DbSet<OrderDetail> OrderDetails { get; set; } // Order Details
         public System.Data.Entity.DbSet<OrderDetailsExtended> OrderDetailsExtendeds { get; set; } // Order Details Extended
@@ -194,6 +196,7 @@ namespace Northwind.DataAccessLayer
             modelBuilder.Configurations.Add(new CustomerDemographicConfiguration());
             modelBuilder.Configurations.Add(new EmployeeConfiguration());
             modelBuilder.Configurations.Add(new InvoiceConfiguration());
+            modelBuilder.Configurations.Add(new NewTableConfiguration());
             modelBuilder.Configurations.Add(new OrderConfiguration());
             modelBuilder.Configurations.Add(new OrderDetailConfiguration());
             modelBuilder.Configurations.Add(new OrderDetailsExtendedConfiguration());
@@ -227,6 +230,7 @@ namespace Northwind.DataAccessLayer
             modelBuilder.Configurations.Add(new CustomerDemographicConfiguration(schema));
             modelBuilder.Configurations.Add(new EmployeeConfiguration(schema));
             modelBuilder.Configurations.Add(new InvoiceConfiguration(schema));
+            modelBuilder.Configurations.Add(new NewTableConfiguration(schema));
             modelBuilder.Configurations.Add(new OrderConfiguration(schema));
             modelBuilder.Configurations.Add(new OrderDetailConfiguration(schema));
             modelBuilder.Configurations.Add(new OrderDetailsExtendedConfiguration(schema));
@@ -495,6 +499,7 @@ namespace Northwind.DataAccessLayer
         public System.Data.Entity.DbSet<CustomerDemographic> CustomerDemographics { get; set; }
         public System.Data.Entity.DbSet<Employee> Employees { get; set; }
         public System.Data.Entity.DbSet<Invoice> Invoices { get; set; }
+        public System.Data.Entity.DbSet<NewTable> NewTables { get; set; }
         public System.Data.Entity.DbSet<Order> Orders { get; set; }
         public System.Data.Entity.DbSet<OrderDetail> OrderDetails { get; set; }
         public System.Data.Entity.DbSet<OrderDetailsExtended> OrderDetailsExtendeds { get; set; }
@@ -525,6 +530,7 @@ namespace Northwind.DataAccessLayer
             CustomerDemographics = new FakeDbSet<CustomerDemographic>("CustomerTypeId");
             Employees = new FakeDbSet<Employee>("EmployeeId");
             Invoices = new FakeDbSet<Invoice>("CustomerName", "Salesperson", "OrderId", "ShipperName", "ProductId", "ProductName", "UnitPrice", "Quantity", "Discount");
+            NewTables = new FakeDbSet<NewTable>("Id");
             Orders = new FakeDbSet<Order>("OrderId");
             OrderDetails = new FakeDbSet<OrderDetail>("OrderId", "ProductId");
             OrderDetailsExtendeds = new FakeDbSet<OrderDetailsExtended>("OrderId", "ProductId", "ProductName", "UnitPrice", "Quantity", "Discount");
@@ -1186,6 +1192,24 @@ namespace Northwind.DataAccessLayer
         partial void InitializePartial();
     }
 
+    // NewTable
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
+    public partial class NewTable
+    {
+        public int Id { get; set; } // Id (Primary key)
+        public string Name { get; set; } // Name (length: 10)
+        public string Desc { get; set; } // Desc (length: 10)
+        public int? Value { get; set; } // Value
+        public System.DateTime? NewField { get; set; } // NewField
+
+        public NewTable()
+        {
+            InitializePartial();
+        }
+
+        partial void InitializePartial();
+    }
+
     // Orders
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
     public partial class Order
@@ -1232,6 +1256,7 @@ namespace Northwind.DataAccessLayer
         public decimal UnitPrice { get; set; } // UnitPrice
         public short Quantity { get; set; } // Quantity
         public float Discount { get; set; } // Discount
+        public string NewField { get; set; } // NewField (length: 10)
 
         // Foreign keys
         public virtual Order Order { get; set; } // FK_Order_Details_Orders
@@ -1865,6 +1890,30 @@ namespace Northwind.DataAccessLayer
         partial void InitializePartial();
     }
 
+    // NewTable
+    [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
+    public partial class NewTableConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<NewTable>
+    {
+        public NewTableConfiguration()
+            : this("dbo")
+        {
+        }
+
+        public NewTableConfiguration(string schema)
+        {
+            ToTable("NewTable", schema);
+            HasKey(x => x.Id);
+
+            Property(x => x.Id).HasColumnName(@"Id").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+            Property(x => x.Name).HasColumnName(@"Name").IsOptional().IsFixedLength().HasColumnType("nchar").HasMaxLength(10);
+            Property(x => x.Desc).HasColumnName(@"Desc").IsOptional().IsFixedLength().HasColumnType("nchar").HasMaxLength(10);
+            Property(x => x.Value).HasColumnName(@"Value").IsOptional().HasColumnType("int");
+            Property(x => x.NewField).HasColumnName(@"NewField").IsOptional().HasColumnType("datetime");
+            InitializePartial();
+        }
+        partial void InitializePartial();
+    }
+
     // Orders
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.22.1.0")]
     public partial class OrderConfiguration : System.Data.Entity.ModelConfiguration.EntityTypeConfiguration<Order>
@@ -1922,6 +1971,7 @@ namespace Northwind.DataAccessLayer
             Property(x => x.UnitPrice).HasColumnName(@"UnitPrice").IsRequired().HasColumnType("money").HasPrecision(19,4);
             Property(x => x.Quantity).HasColumnName(@"Quantity").IsRequired().HasColumnType("smallint");
             Property(x => x.Discount).HasColumnName(@"Discount").IsRequired().HasColumnType("real");
+            Property(x => x.NewField).HasColumnName(@"NewField").IsOptional().IsFixedLength().HasColumnType("nchar").HasMaxLength(10);
 
             // Foreign keys
             HasRequired(a => a.Order).WithMany(b => b.OrderDetails).HasForeignKey(c => c.OrderId).WillCascadeOnDelete(false); // FK_Order_Details_Orders
