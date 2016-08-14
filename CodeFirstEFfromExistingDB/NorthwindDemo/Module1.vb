@@ -26,16 +26,12 @@ Module Module1
 
             Console.WriteLine()
 
-            Console.WriteLine(dbContext.GetSaveChangesCount())
+            PrintDbContextSaveChangesCount(dbContext)
             dbContext.SaveChanges()
             dbContext.SaveChanges()
-            Console.WriteLine(dbContext.GetSaveChangesCount())
+            PrintDbContextSaveChangesCount(dbContext)
 
-            Dim newTables = dbContext.Database.SqlQuery(Of NewTable)("select * from NewTable")
-
-            For Each newTable In newTables
-                Console.WriteLine($"id: {newTable.Id}   name: {newTable.Name}   desc: {newTable.Desc}   datetime: {newTable.NewField}")
-            Next
+            PrintNewTables(dbContext)
 
             ' Update Table: NewTable
             Dim efNewTables = dbContext.NewTables
@@ -47,11 +43,7 @@ Module Module1
             ' save changes
             dbContext.SaveChanges()
 
-            newTables = dbContext.Database.SqlQuery(Of NewTable)("select * from NewTable")
-
-            For Each newTable In newTables
-                Console.WriteLine($"id: {newTable.Id}   name: {newTable.Name}   desc: {newTable.Desc}   datetime: {newTable.NewField}")
-            Next
+            PrintNewTables(dbContext)
 
         End Using
 
@@ -59,4 +51,17 @@ Module Module1
         Console.ReadKey()
     End Sub
 
+
+    Private Sub PrintDbContextSaveChangesCount(dbContext As NorthwindDbContext)
+        Console.WriteLine($"DbContext SavechangesCount: {dbContext.GetSaveChangesCount()}")
+    End Sub
+
+    Private Sub PrintNewTables(dbContext As NorthwindDbContext)
+        Dim newTables = dbContext.Database.SqlQuery(Of NewTable)("select * from NewTable")
+
+        For Each newTable In newTables
+            Console.WriteLine($"id: {newTable.Id}   name: {newTable.Name}   desc: {newTable.Desc}   datetime: {newTable.NewField}")
+        Next
+
+    End Sub
 End Module
