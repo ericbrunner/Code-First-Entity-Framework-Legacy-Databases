@@ -50,15 +50,219 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\FakeNorthwindDbContext.cs" />
+    <Compile Include="Model\AlphabeticalListOfProduct.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\AlphabeticalListOfProductConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Category.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CategoryConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CategorySalesFor1997.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CategorySalesFor1997Configuration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CurrentProductList.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CurrentProductListConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Customer.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustomerAndSuppliersByCity.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustomerAndSuppliersByCityConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustomerConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustomerDemographic.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustomerDemographicConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustOrderHistReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustOrdersDetailReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CustOrdersOrdersReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EmployeeConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EmployeeSalesByCountryReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FakeDbSet.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FakeNorthwindDbContext-Partial.cs" />
+    <Compile Include="Model\FakeNorthwindDbContext.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\INorthwindDbContext.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Interfaces\ISaveChangesCount.cs" />
+    <Compile Include="Model\Invoice.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\InvoiceConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NewTable.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\NewTableConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Northwind.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Northwind.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Context\CustomDbContext.cs" />
-    <Compile Include="Model\NorthwindDbContext.cs" />
+    <Compile Include="Model\NorthwindDbContext-Partial.cs" />
+    <Compile Include="Model\NorthwindDbContext.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Order.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderDetail.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderDetailConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderDetailsExtended.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderDetailsExtendedConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrdersQry.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrdersQryConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderSubtotal.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\OrderSubtotalConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductsAboveAveragePrice.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductsAboveAveragePriceConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductSalesFor1997.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductSalesFor1997Configuration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductsByCategory.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductsByCategoryConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\QuarterlyOrder.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Region.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RegionConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalesByCategory.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalesByCategoryConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalesByCategoryReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalesByYearReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalesTotalsByAmount.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SalesTotalsByAmountConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Shipper.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ShipperConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SummaryOfSalesByQuarter.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SummaryOfSalesByQuarterConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SummaryOfSalesByYear.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SummaryOfSalesByYearConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Supplier.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SupplierConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Sysdiagram.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\SysdiagramConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TenMostExpensiveProductsReturnModel.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Territory.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\TerritoryConfiguration.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
     // A course for this generator is available on Pluralsight at https://www.pluralsight.com/courses/code-first-entity-framework-legacy-databases
 
     // Main settings **********************************************************************************************************************
-    ConnectionStringName = "NorthwindDbContext";   // Searches for this connection string in config files listed below in the ConfigFilenameSearchOrder setting
+    ConnectionStringName = "Northwind";   // Searches for this connection string in config files listed below in the ConfigFilenameSearchOrder setting
     //ConnectionStringName is the only required setting
     Namespace = "Northwind.DataAccessLayer"; // Override the default namespace here
     DbContextName = "NorthwindDbContext";
@@ -15,12 +15,12 @@
     //DbContextBaseClass = "System.Data.Entity.DbContext";   // Specify what the base class is for your DbContext. For ASP.NET Identity use "IdentityDbContext<ApplicationUser>"
     DbContextBaseClass = "Northwind.DataAccessLayer.Model.Context.CustomDbContext";
     //DefaultConstructorArgument = "EnvironmentConnectionStrings.MyDbContext"; //defaults to "Name=" + ConnectionStringName
-    TargetFrameworkVersion = "4.51"; // Please set this to your .NET framework version, 4.0, 4.5, 4.51, etc.
+    TargetFrameworkVersion = "4.61"; // Please set this to your .NET framework version, 4.0, 4.5, 4.51, etc.
     ConfigurationClassName = "Configuration"; // Configuration, Mapping, Map, etc. This is appended to the Poco class name to configure the mappings.
     ConfigFilenameSearchOrder = new[] { "app.config", "web.config", "app.config.transform", "web.config.transform" }; // Add more here if required. The config files are searched for in the local project first, then the whole solution second.
     MakeClassesPartial = true;
     MakeDbContextInterfacePartial = false;
-    GenerateSeparateFiles = false;
+    GenerateSeparateFiles = true;
     UseMappingTables = true; // If true, mapping will be used and no mapping tables will be generated. If false, all tables will be generated.
     UseCamelCase = true;    // This will rename the tables & fields to use CamelCase. If false table & field names will be left alone.
     IncludeComments = CommentsStyle.AtEndOfField; // Adds comments to the generated code
