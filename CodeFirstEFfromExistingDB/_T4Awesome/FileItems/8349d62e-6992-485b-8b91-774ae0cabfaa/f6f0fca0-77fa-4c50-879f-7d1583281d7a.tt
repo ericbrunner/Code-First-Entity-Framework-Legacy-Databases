@@ -1,4 +1,0 @@
-<#  
-var userName = T4AContext.Parameters.GetTextParameterValue("UsersName");
-#>
-Hello World From <#= userName #>
